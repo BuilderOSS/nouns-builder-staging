@@ -19,7 +19,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).send(attribtues)
   } catch (e) {
-    res.status(500).send(e)
+    console.error('Error querying migration attributes: ', e)
+    res.status(500).send((e as Error).message)
   }
 }
 

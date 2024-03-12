@@ -14,7 +14,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).send(snapshot)
   } catch (e) {
-    res.status(500).send(e)
+    console.error('Error taking migration snapshot: ', e)
+    res.status(500).send((e as Error).message)
   }
 }
 
