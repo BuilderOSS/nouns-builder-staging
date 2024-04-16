@@ -4,13 +4,15 @@ import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useAccount, useContractRead } from 'wagmi'
-import { readContracts } from 'wagmi/actions'
+import { readContract } from 'wagmi/actions'
 
 import { Meta } from 'src/components/Meta'
 import { CACHE_TIMES } from 'src/constants/cacheTimes'
 import { PUBLIC_DEFAULT_CHAINS } from 'src/constants/defaultChains'
 import { auctionAbi } from 'src/data/contract/abis'
 import getDAOAddresses from 'src/data/contract/requests/getDAOAddresses'
+import { SDK } from 'src/data/subgraph/client'
+import { OrderDirection, Token_OrderBy } from 'src/data/subgraph/sdk.generated'
 import { getDaoLayout } from 'src/layouts/DaoLayout'
 import NogglesLogo from 'src/layouts/assets/builder-framed.svg'
 import {
@@ -24,7 +26,6 @@ import {
 } from 'src/modules/dao'
 import { NextPageWithLayout } from 'src/pages/_app'
 import { AddressType, CHAIN_ID } from 'src/typings'
-import { unpackOptionalArray } from 'src/utils/helpers'
 
 interface DaoPageProps {
   chainId: CHAIN_ID
@@ -116,6 +117,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const collectionAddress = context?.params?.token as AddressType
   const network = context?.params?.network
   const tab = context?.query?.tab as string
+  const referral = context?.query?.referral as string
 
   const chain = PUBLIC_DEFAULT_CHAINS.find((x) => x.slug === network)
 
@@ -133,29 +135,26 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
     }
 
-    const [auction, owner] = await readContracts({
-      allowFailure: false,
-      contracts: [
-        {
-          abi: auctionAbi,
-          address: addresses.auction as AddressType,
-          functionName: 'auction',
-          chainId: chain.id,
+    const latestTokenId = await SDK.connect(chain.id)
+      .tokens({
+        where: {
+          dao: collectionAddress.toLowerCase(),
         },
-        {
-          abi: auctionAbi,
-          address: addresses.auction as AddressType,
-          functionName: 'owner',
-          chainId: chain.id,
-        },
-      ],
+        orderBy: Token_OrderBy.TokenId,
+        orderDirection: OrderDirection.Desc,
+        first: 1,
+      })
+      .then((x) => (x.tokens.length > 0 ? x.tokens[0].tokenId : undefined))
+
+    const owner = await readContract({
+      abi: auctionAbi,
+      address: addresses.auction as AddressType,
+      functionName: 'owner',
+      chainId: chain.id,
     })
 
-    const [tokenId, highestBid, highestBidder, startTime, endTime, settled] =
-      unpackOptionalArray(auction, 6)
-
     const initialized: boolean =
-      endTime !== 0 && startTime !== 0 && owner === addresses.treasury
+      owner === addresses.treasury && latestTokenId !== undefined
 
     if (!initialized) {
       return {
@@ -167,11 +166,22 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
     }
 
+    if (!tab && !referral) {
+      return {
+        redirect: {
+          destination: `/dao/${network}/${collectionAddress}/${latestTokenId}`,
+          permanent: false,
+        },
+      }
+    }
+
+    const params = new URLSearchParams()
+    if (tab) params.set('tab', tab)
+    if (referral) params.set('referral', referral)
+
     return {
       redirect: {
-        destination: `/dao/${network}/${collectionAddress}/${tokenId}${
-          tab ? `?tab=${tab}` : ''
-        }`,
+        destination: `/dao/${network}/${collectionAddress}/${latestTokenId}?${params.toString()}`,
         permanent: false,
       },
     }

@@ -20,10 +20,14 @@ const MAINNET_CHAINS = [mainnet, zora, base, optimism]
 // Mainnet is required here due to hooks like useEnsData that only pull data from mainnet
 const TESTNET_CHAINS = [mainnet, sepolia, optimismSepolia, baseSepolia, zoraSepolia]
 
-const AVAILIBLE_CHAINS = PUBLIC_IS_TESTNET ? TESTNET_CHAINS : MAINNET_CHAINS
+export const L1_CHAINS = PUBLIC_IS_TESTNET ? [CHAIN_ID.SEPOLIA] : [CHAIN_ID.ETHEREUM]
+
+export const L2_CHAINS = PUBLIC_IS_TESTNET
+  ? [CHAIN_ID.ZORA_SEPOLIA, CHAIN_ID.BASE_SEPOLIA, CHAIN_ID.OPTIMISM_SEPOLIA]
+  : [CHAIN_ID.ZORA, CHAIN_ID.BASE, CHAIN_ID.OPTIMISM]
 
 const { chains, publicClient } = configureChains(
-  [...AVAILIBLE_CHAINS],
+  [...TESTNET_CHAINS, ...MAINNET_CHAINS],
   [
     alchemyProvider({
       apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID as string,

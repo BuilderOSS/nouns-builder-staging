@@ -1,6 +1,6 @@
 import { StaticJsonRpcProvider } from '@ethersproject/providers'
 import axios from 'axios'
-import { BigNumber, constants, ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 import { isAddress } from 'ethers/lib/utils.js'
 
 import { CHAIN_ID } from 'src/typings'
@@ -32,12 +32,7 @@ export interface SimulationResult {
 const { TENDERLY_USER, TENDERLY_PROJECT, TENDERLY_ACCESS_KEY } = process.env
 
 const TENDERLY_FORK_API = `https://api.tenderly.co/api/v1/account/${TENDERLY_USER}/project/${TENDERLY_PROJECT}/fork`
-const TENDERLY_FORK_V2_BASE_URL =
-  'https://api.tenderly.co/api/v2/project/nouns-builder-public/forks'
-
-const MOCK_BALANCE = ethers.utils.parseUnits('100', 'ether')
-
-export class InsufficientFundsError extends Error {}
+const TENDERLY_FORK_V2_BASE_URL = `https://api.tenderly.co/api/v2/project/${TENDERLY_PROJECT}/forks`
 
 export async function simulate({
   treasuryAddress,
@@ -69,22 +64,15 @@ export async function simulate({
 
   const simulations: Simulation[] = []
 
-  // Mock balance of treasury to ensure gas costs are covered as this will be covered by proposal
-  // executor in reality
-  await forkProvider.send('tenderly_addBalance', [
-    [treasuryAddress],
-    ethers.utils.hexValue(MOCK_BALANCE.toHexString()),
-  ])
-
-  let totalGasUsed: BigNumber = constants.Zero
+  let totalGasUsed: BigNumber = BigNumber.from(0)
 
   // Loop through the transactions and simulate them against the fork
   for (let i = 0; i < targets.length; i++) {
     const txParams = {
       from: treasuryAddress.toLowerCase(),
       to: targets[i].toLowerCase(),
-      gas: '0x163CCD40',
-      gasPrice: '0x3',
+      gasLimit: '0x163CCD40',
+      gasPrice: '0x0',
       // We have to wrap this in a hexValue() call because .toHexString() adds a 0x0 padding to the front of the value.
       value: ethers.utils.hexValue(BigNumber.from(values[i]).toHexString()),
       data: calldatas[i],
@@ -104,18 +92,6 @@ export async function simulate({
       gasUsed: receipt.gasUsed,
     })
     totalGasUsed = totalGasUsed.add(receipt.gasUsed)
-  }
-
-  // Check final balance is greater than zero
-  const balanceResponse = await forkProvider.send('eth_getBalance', [
-    treasuryAddress,
-    'latest',
-  ])
-  // True final balance is balance + totalGas - MOCK_BALANCE
-  const finalBalance = BigNumber.from(balanceResponse).add(totalGasUsed).sub(MOCK_BALANCE)
-
-  if (finalBalance.lt(constants.Zero)) {
-    throw new InsufficientFundsError()
   }
 
   const simulationSucceeded = simulations.every((s) => s.success)
