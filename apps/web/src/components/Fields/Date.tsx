@@ -68,17 +68,6 @@ const Date: React.FC<DateProps> = (
   return (
     <Box as="fieldset" mb={'x8'} p={'x0'} className={defaultFieldsetStyle}>
       {inputLabel && <label className={defaultInputLabelStyle}>{inputLabel}</label>}
-      {errorMessage && (
-        <Box
-          position={'absolute'}
-          right={'x2'}
-          top={'x8'}
-          fontSize={12}
-          className={defaultInputErrorMessageStyle}
-        >
-          {errorMessage as string}
-        </Box>
-      )}
       <input
         className={!!errorMessage ? defaultInputErrorStyle : defaultInputStyle}
         ref={ref}
@@ -89,6 +78,17 @@ const Date: React.FC<DateProps> = (
         readOnly={true}
         disabled={disabled}
       />
+      {errorMessage && (
+        <Box
+          right={'x2'}
+          top={'x15'}
+          pt={'x4'}
+          fontSize={14}
+          className={defaultInputErrorMessageStyle}
+        >
+          {errorMessage as string}
+        </Box>
+      )}
     </Box>
   )
 }
