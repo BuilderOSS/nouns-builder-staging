@@ -1,106 +1,93 @@
+
 # Nouns Builder Subgraph
 
-## Getting started with Goldsky 👉  
-- Read the docs: https://docs.goldsky.com/subgraphs/deploying-subgraphs
+## Getting Started
+👉 [Read the Goldsky docs](https://docs.goldsky.com/subgraphs/deploying-subgraphs)
 
-### Chain Environment
+The Nouns Builder subgraph supports eight networks:
+- `ethereum`
+- `ethereum-sepolia`
+- `base`
+- `base-sepolia`
+- `optimism`
+- `optimism-sepolia`
+- `zora`
+- `zora-sepolia`
 
-Nouns Builder subgraph currently supports four networks: Ethereum's `mainnet`, Ethereum's current test network `sepolia`, `base`, `optimism, `and `zora`.  
-
-Set the environment variables indicated below to deploy the subgraph to the desired network:  
-```bash
-# the default chain id defined in .env, to run against testnet
-NETWORK_RPC=<TESTNET_RPC_ENDPOINT>
-NETWORK_NAME=sepolia
-
-# to run against mainnet locally
-NETWORK_RPC=<MAINNET_RPC_ENDPOINT>
-NETWORK_NAME=mainnet
-```
-
-## Setup
-
-### Step 0 - Create a local .env file and set the env variables to the desired network
-
-```bash
-cp .env.example .env
-````
-
-### Step 1 - Install dependencies
-
+### Step 1 - Install Dependencies
+Navigate to the subgraph directory and run:
 ```bash
 # FROM: ./apps/subgraph
 pnpm install
-````
+```
 
-### Step 2 - Set up a personal Goldsky API key  
-1. Ask to join the team account at [goldsky.com](https://goldsky.com)
-2. Create an API key for yourself on the Settings page
-3. Install the Goldsky CLI locally:  
-```bash
-curl https://goldsky.com | sh  
-```  
+### Step 2 - Set Up a Personal Goldsky API Key
+1. Request to join the team account at [goldsky.com](https://goldsky.com).
+2. Create an API key on your Settings page.
+3. Install the Goldsky CLI:
+    ```bash
+    curl https://goldsky.com | sh  
+    ```  
 
-### Step 4 - Log in with your API key created earlier:  
+### Step 3 - Log in with the API Key
+Use the API key you created:
 ```bash
 # FROM: ./apps/subgraph
 goldsky login
 ```
 
-### Step 3 - Build the subgraph locally
+### Step 4 - Build the Subgraph from Source
+Run the following commands (these scripts are defined in `package.json`):
 ```bash
 # FROM: ./apps/subgraph
-# These scripts are defined in the package.json file
 pnpm prepare:<desired network>
 pnpm codegen
 pnpm build
 ```  
 
-This will generate the types, build the subgraph, and create the local `subgraph.yml` file
-### Step 4 - Deploy a new or updated subgraph
+This will generate types, build the subgraph, and create a local `subgraph.yaml` file.
 
-#### !!!! IMPORTANT: !!!!!  
-**To avoid subgraph downtime in production when upgrading, it is BEST to have a duplicate/backup subgraph so that if something goes wrong, the
-traffic can be redirected to the duplicate subgraph instead of having to wait for the subgraph to re-deploy/rollback to
-a previous version, which can take hours!**
+### Step 5 - Deploy the Subgraph to Production
 
-- Note: The subgraph name is always `nouns-builder-<network>` regardless of version so the clients don't have to update their URI on every minor version bump. 
-- However, you still should always bump the `specVersion` at the top of `subgraph.yaml.mustache` when making changes.  
-- The **--tag** flag aliases `latest` to the latest `specVersion`.
+#### IMPORTANT:
+**To avoid downtime during upgrades, maintain a backup subgraph. If issues arise, you can redirect traffic to the backup rather than waiting for redeployment or rollback, which can take hours.**
 
-**Never forget to tag!**
+- The subgraph name follows the pattern `nouns-builder-<network>`, so clients won’t need to update their URI for minor version changes.
+- Increase the `specVersion` at the top of `subgraph.yaml.mustache` for each new version.
+- Use the **--tag** flag to alias `latest` with the current `specVersion`.
+
+**Always remember to tag!**
 
 ```bash
 # FROM: ./apps/subgraph
-# This example specVersion is 0.0.6
+# Example with specVersion 0.0.6
 
-$ goldsky subgraph deploy nouns-builder-<network>/0.0.6 --path .        
-$ goldsky subgraph tag create nouns-builder-<network>/0.0.6 --tag latest
-# The API endpoint will now be in this format: api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-ethereum-sepolia/latest/gn
+goldsky subgraph deploy nouns-builder-<network>/0.0.6 --path .        
+goldsky subgraph tag create nouns-builder-<network>/0.0.6 --tag latest
+# API endpoint format: api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-ethereum-sepolia/latest/gn
 ```
 
-### Step 5 - Query the Subgraph
+### Step 6 - Query the Subgraph
 
-You can now query the subgraph in the Goldsky GraphQL playground to test your changes, **but be aware it may take a few hours to
-fully index.**
+You can now query the subgraph in the Goldsky GraphQL playground to test your changes. **Note: Full indexing may take several hours.**
 
 ## Production Endpoints
 
 The subgraph is currently deployed to the following networks:
 
-- TODO: - [Ethereum Mainnet](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-ethereum/latest/gn)  
-- [Ethereum Sepolia](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-ethereum-sepolia/latest/gn)  
-- TODO: - [Optimism Mainnet](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-optimism/latest/gn)  
-- TODO: - [Optimism Sepolia](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-optimism-sepolia/latest/gn)  
-- TODO: - [Zora Mainnet](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-zora/latest/gn)  
-- TODO: - [Zora Sepolia](https://api.goldsky.com/api/public/<project name>//subgraphs/nouns-builder-zora-sepolia/latest/gn)  
-- TODO: - [Base Mainnet](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-base/latest/gn)  
-- TODO: - [Base Sepolia](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-base-sepolia/latest/gn)
+- [Ethereum](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-ethereum/latest/gn)
+- [Ethereum Sepolia](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-ethereum-sepolia/latest/gn)
+- [Optimism](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-optimism/latest/gn)
+- TODO: [Optimism Sepolia](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-optimism-sepolia/latest/gn)
+- TODO: [Zora](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-zora/latest/gn)
+- TODO: [Zora Sepolia](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-zora-sepolia/latest/gn)
+- TODO: [Base](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-base/latest/gn)
+- TODO: [Base Sepolia](https://api.goldsky.com/api/public/<project name>/subgraphs/nouns-builder-base-sepolia/latest/gn)
 
-## Local Development
-- generate types with `pnpm codegen`
-- build the subgraph with `pnpm build`
-- run the local graph node with `pnpm local-node`
-- for Mac users on Apple Silicon chips you will need to use a local image of `graphprotocol/graph-node` [instructions here](https://github.com/graphprotocol/graph-node/tree/master/docker)
-- create the local subgraph with `pnpm create-local`
-- deploy changes to the local subgraph with `pnpm deploy-local`
+## Local Development with Docker Compose
+- Generate types with `pnpm codegen`
+- Build the subgraph with `pnpm build`
+- Run the local graph node with `pnpm local-node`
+- For Mac users on Apple Silicon, use a local image of `graphprotocol/graph-node` (see [instructions here](https://github.com/graphprotocol/graph-node/tree/master/docker)).
+- Create the local subgraph with `pnpm create-local`
+- Deploy changes to the local subgraph with `pnpm deploy-local`

@@ -4,19 +4,19 @@
   "scripts": {
     "clean": "rm -rf ./generated ./build subgraph.yaml",
     "build": "graph build",
-    "local-node": "docker-compose up",
     "codegen": "graph codegen",
-    "prepare:ethereum-sepolia": "mustache config/sepolia.json subgraph.yaml.mustache > subgraph.yaml",
-    "prepare:ethereum": "mustache config/mainnet.json subgraph.yaml.mustache > subgraph.yaml",
-    "prepare:baset": "mustache config/base.json subgraph.yaml.mustache > subgraph.yaml",
+    "prepare:ethereum-sepolia": "mustache config/ethereum-sepolia.json subgraph.yaml.mustache > subgraph.yaml",
+    "prepare:ethereum": "mustache config/ethereum.json subgraph.yaml.mustache > subgraph.yaml",
+    "prepare:base": "mustache config/base.json subgraph.yaml.mustache > subgraph.yaml",
     "prepare:base-sepolia": "mustache config/base-sepolia.json subgraph.yaml.mustache > subgraph.yaml",
     "prepare:optimism": "mustache config/optimism.json subgraph.yaml.mustache > subgraph.yaml",
     "prepare:optimism-sepolia": "mustache config/optimism-sepolia.json subgraph.yaml.mustache > subgraph.yaml",
     "prepare:zora": "mustache config/zora.json subgraph.yaml.mustache > subgraph.yaml",
     "prepare:zora-sepolia": "mustache config/zora-sepolia.json subgraph.yaml.mustache > subgraph.yaml",
-    "create:local": "graph create --node http://localhost:8020/ nouns-builder",
+    "create:local": "graph local http://localhost:8020/ nouns-builder",
+    "local-node": "docker compose up",
     "remove:local": "graph remove --node http://localhost:8020/ nouns-builder",
-    "deploy:local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 --network sepolia nouns-builder"
+    "deploy:local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 nouns-builder"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.87.0",
