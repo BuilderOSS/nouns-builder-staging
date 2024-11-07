@@ -1,4 +1,3 @@
-
 # Nouns Builder Subgraph
 
 ## Getting Started
@@ -42,7 +41,7 @@ Run the following commands (these scripts are defined in `package.json`):
 # FROM: ./apps/subgraph
 pnpm prepare:<desired network>
 pnpm codegen
-pnpm build
+pnpm build:subgraph
 ```  
 
 This will generate types, build the subgraph, and create a local `subgraph.yaml` file.
@@ -86,7 +85,7 @@ The subgraph is currently deployed to the following networks:
 
 ## Local Development with Docker Compose
 - Generate types with `pnpm codegen`
-- Build the subgraph with `pnpm build`
+- Build the subgraph with `pnpm build:subgraph`
 - Run the local graph node with `pnpm local-node`
 - For Mac users on Apple Silicon, use a local image of `graphprotocol/graph-node` (see [instructions here](https://github.com/graphprotocol/graph-node/tree/master/docker)).
 - Create the local subgraph with `pnpm create-local`
