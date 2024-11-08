@@ -9,10 +9,10 @@ module.exports = {
     '@next/next/no-img-element': 'off',
     'react/no-unescaped-entities': 0,
     'unused-imports/no-unused-imports-ts': 2,
+    '@next/next/no-page-custom-font': 'off',
   },
   parserOptions: {
-    babelOptions: {
-      presets: [require.resolve('next/babel')],
-    },
+    ecmaVersion: 2020,
+    sourceType: 'module',
   },
 }
