@@ -1,4 +1,3 @@
-
 # Nouns Builder Subgraph
 
 ## Index
