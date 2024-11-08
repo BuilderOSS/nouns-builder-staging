@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 
 import { Avatar } from 'src/components/Avatar'
-import { useEnsData } from 'src/hooks/useEnsData'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 
 import { recentBidder } from '../Auction.css'
 
@@ -12,16 +12,16 @@ interface BidderProps {
 }
 
 export const Bidder: React.FC<BidderProps> = ({ address }) => {
-  const { displayName, ensAvatar } = useEnsData(address)
+  const { name, avatar } = useNnsOrEnsData(address)
 
   return (
     <Flex align="center">
       <Box mr="x2">
-        <Avatar address={address} src={ensAvatar} size="32" />
+        <Avatar address={address} src={avatar} size="32" />
       </Box>
       <Text className={recentBidder} variant="paragraph-md">
         <Link href={`/profile/${address}`} passHref>
-          <a>{displayName}</a>
+          <a>{name}</a>
         </Link>
       </Text>
     </Flex>

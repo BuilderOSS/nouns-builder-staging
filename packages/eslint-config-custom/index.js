@@ -1,9 +1,8 @@
 module.exports = {
-  extends: ['next', 'turbo', 'prettier'],
+  extends: ['next', "next/core-web-vitals", 'turbo', 'prettier'],
   plugins: ['@typescript-eslint', 'unused-imports'],
   parser: '@typescript-eslint/parser',
   rules: {
-    '@next/next/no-html-link-for-pages': 'off',
     'react/jsx-key': 'off',
     'react/display-name': 'off',
     '@next/next/no-img-element': 'off',

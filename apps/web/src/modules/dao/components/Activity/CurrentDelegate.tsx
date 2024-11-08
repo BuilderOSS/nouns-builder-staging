@@ -7,7 +7,7 @@ import { Icon } from 'src/components/Icon'
 import { NULL_ADDRESS } from 'src/constants/addresses'
 import { ETHERSCAN_BASE_URL } from 'src/constants/etherscan'
 import { tokenAbi } from 'src/data/contract/abis'
-import { useEnsData } from 'src/hooks/useEnsData'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 import { useChainStore } from 'src/stores/useChainStore'
 import { proposalFormTitle } from 'src/styles/Proposals.css'
 import { walletSnippet } from 'src/utils/helpers'
@@ -32,7 +32,7 @@ export const CurrentDelegate = ({ toggleIsEditing }: CurrentDelegateProps) => {
     enabled: !!signerAddress,
   })
 
-  const { ensName, ensAvatar } = useEnsData(delegateAddress)
+  const { name, avatar } = useNnsOrEnsData(delegateAddress)
 
   return (
     <Flex direction={'column'} width={'100%'}>
@@ -58,8 +58,8 @@ export const CurrentDelegate = ({ toggleIsEditing }: CurrentDelegateProps) => {
           borderRadius="curved"
         >
           <Box mr={'x2'}>
-            {ensAvatar ? (
-              <img src={ensAvatar} alt="avatar" height={28} width={28} />
+            {avatar ? (
+              <img src={avatar} alt="avatar" height={28} width={28} />
             ) : (
               <Avatar address={delegateAddress} size={'28'} />
             )}

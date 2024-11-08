@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import { ETHERSCAN_BASE_URL } from 'src/constants/etherscan'
 import { Proposal } from 'src/data/subgraph/requests/proposalQuery'
-import { useEnsData } from 'src/hooks/useEnsData'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 import { useChainStore } from 'src/stores/useChainStore'
 
 import { ProposalNavigation } from './ProposalNavigation'
@@ -17,7 +17,7 @@ export const ProposalHeader: React.FC<ProposalHeaderProps> = ({ proposal }) => {
   const router = useRouter()
   const { title, voteStart, voteEnd, proposer, expiresAt, proposalNumber } = proposal
 
-  const { displayName: proposerDisplayName } = useEnsData(proposer)
+  const { name: proposername } = useNnsOrEnsData(proposer)
   const chain = useChainStore((x) => x.chain)
 
   return (
@@ -65,7 +65,7 @@ export const ProposalHeader: React.FC<ProposalHeaderProps> = ({ proposal }) => {
                 rel="noreferrer"
                 target="_blank"
               >
-                {proposerDisplayName}
+                {proposername}
               </a>
             </Box>
           </Flex>

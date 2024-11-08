@@ -27,12 +27,8 @@ export const DaoDescription = ({ description }: { description?: string }) => {
   }, [description])
 
   const correctedDescription = React.useMemo(() => {
-    if (typeof description === 'string') {
-      // Text processing on the backend (possibly subgraph) will sometimes replace
-      // \n with \\n, which will break markdown.
-      // This effect is intermittent, so this catches any instance where it happens
-      return description.replace(/\\n/g, '\n').replace(/\\r/g, '\r')
-    }
+     // Text processing on the backend (possibly subgraph) will sometimes replace
+    return description?.replace(/\\n/g, '\n').replace(/\\r/g, '\r')
   }, [description])
 
   // This regex check is large. Memoizing it for perf

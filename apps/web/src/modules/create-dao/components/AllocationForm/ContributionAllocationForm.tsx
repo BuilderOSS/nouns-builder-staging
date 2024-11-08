@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik'
 import Date from 'src/components/Fields/Date'
 import SmartInput from 'src/components/Fields/SmartInput'
 import { PUBLIC_BUILDER_ADDRESS, PUBLIC_NOUNS_ADDRESS } from 'src/constants/addresses'
-import { useEnsData } from 'src/hooks/useEnsData'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 import { useChainStore } from 'src/stores/useChainStore'
 import { yearsAhead } from 'src/utils/helpers'
 
@@ -30,8 +30,8 @@ export const ContributionAllocationForm: React.FC<ContributionAllocationFormProp
 }) => {
   const chain = useChainStore((x) => x.chain)
   const chainId = chain.id as ContributionChain
-  const { displayName: builderDisplayName } = useEnsData(PUBLIC_BUILDER_ADDRESS[chainId])
-  const { displayName: nounsDisplayName } = useEnsData(PUBLIC_NOUNS_ADDRESS[chainId])
+  const { name: buildername } = useNnsOrEnsData(PUBLIC_BUILDER_ADDRESS[chainId])
+  const { name: nounsname } = useNnsOrEnsData(PUBLIC_NOUNS_ADDRESS[chainId])
 
   return (
     <Formik<ContributionAllocationFormValues>
@@ -80,7 +80,7 @@ export const ContributionAllocationForm: React.FC<ContributionAllocationFormProp
                     <DaoCopyAddress
                       name="Builder"
                       image="/builder-avatar-circle.png"
-                      ens={builderDisplayName}
+                      ens={buildername}
                       address={PUBLIC_BUILDER_ADDRESS[chainId]}
                     />
 
@@ -148,7 +148,7 @@ export const ContributionAllocationForm: React.FC<ContributionAllocationFormProp
                     <DaoCopyAddress
                       name="Nouns"
                       image="/nouns-avatar-circle.png"
-                      ens={nounsDisplayName}
+                      ens={nounsname}
                       address={PUBLIC_NOUNS_ADDRESS[chainId]}
                     />
 

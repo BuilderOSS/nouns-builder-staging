@@ -4,13 +4,13 @@ import { Avatar } from 'src/components/Avatar'
 import { Icon } from 'src/components/Icon'
 import { NULL_ADDRESS } from 'src/constants/addresses'
 import { ETHERSCAN_BASE_URL } from 'src/constants/etherscan'
-import { useEnsData } from 'src/hooks/useEnsData'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 import { useChainStore } from 'src/stores/useChainStore'
 
 import { AuctionDetail } from './AuctionDetail'
 
 export const WinningBidder = ({ owner }: { owner?: string }) => {
-  const { displayName, ensAvatar } = useEnsData(owner)
+  const { name, avatar } = useNnsOrEnsData(owner)
   const chain = useChainStore((x) => x.chain)
 
   return (
@@ -19,7 +19,7 @@ export const WinningBidder = ({ owner }: { owner?: string }) => {
         'n/a'
       ) : (
         <Flex direction={'row'} align={'center'}>
-          <Avatar address={owner} src={ensAvatar} size={'24'} />
+          <Avatar address={owner} src={avatar} size={'24'} />
           <Box
             as="a"
             href={`${ETHERSCAN_BASE_URL[chain.id]}/address/${owner}`}
@@ -27,7 +27,7 @@ export const WinningBidder = ({ owner }: { owner?: string }) => {
             target="_blank"
             ml={'x2'}
           >
-            {displayName}
+            {name}
           </Box>
           <Icon ml="x1" fill="text4" id="arrowTopRight" />
         </Flex>

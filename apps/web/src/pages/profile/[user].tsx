@@ -11,7 +11,7 @@ import CopyButton from 'src/components/CopyButton/CopyButton'
 import Pagination from 'src/components/Pagination'
 import { TokenPreview } from 'src/components/Profile'
 import SWR_KEYS from 'src/constants/swrKeys'
-import { useEnsData } from 'src/hooks'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 import { usePagination } from 'src/hooks/usePagination'
 import { getProfileLayout } from 'src/layouts/ProfileLayout'
 import { useLayoutStore } from 'src/stores'
@@ -34,7 +34,7 @@ const ProfilePage: NextPageWithLayout<ProfileProps> = ({ userAddress }) => {
 
   const page = query.page as string
 
-  const { ensName, ensAvatar } = useEnsData(userAddress)
+  const { name, avatar } = useNnsOrEnsData(userAddress as `0x${string}`)
   const { data, error, isValidating } = useSWR(
     userAddress ? [SWR_KEYS.PROFILE_TOKENS, chain.slug, userAddress, page] : undefined,
     () =>
@@ -82,7 +82,7 @@ const ProfilePage: NextPageWithLayout<ProfileProps> = ({ userAddress }) => {
             <Avatar
               mr={{ '@initial': 'x2', '@768': undefined }}
               address={userAddress}
-              src={ensAvatar}
+              src={avatar}
               size={isMobile ? '40' : '90'}
             />
             <Text
@@ -91,7 +91,7 @@ const ProfilePage: NextPageWithLayout<ProfileProps> = ({ userAddress }) => {
               mt={{ '@768': 'x4' }}
               style={{ zIndex: 100 }}
             >
-              {ensName || walletSnippet(userAddress)}
+              {name || walletSnippet(userAddress)}
             </Text>
           </Flex>
 

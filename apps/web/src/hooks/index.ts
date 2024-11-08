@@ -1,5 +1,5 @@
 export * from './useCountdown'
-export * from './useEnsData'
+export * from './useNnsOrEnsData'
 export * from './useInterval'
 export * from './useIsMounted'
 export * from './usePrevious'

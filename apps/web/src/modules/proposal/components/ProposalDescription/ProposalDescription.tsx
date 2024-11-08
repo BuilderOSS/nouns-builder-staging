@@ -11,7 +11,7 @@ import SWR_KEYS from 'src/constants/swrKeys'
 import { SDK } from 'src/data/subgraph/client'
 import { Proposal } from 'src/data/subgraph/requests/proposalQuery'
 import { OrderDirection, Token_OrderBy } from 'src/data/subgraph/sdk.generated'
-import { useEnsData } from 'src/hooks/useEnsData'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 import { useChainStore } from 'src/stores/useChainStore'
 import { propPageWrapper } from 'src/styles/Proposals.css'
 
@@ -37,7 +37,7 @@ export const ProposalDescription: React.FC<ProposalDescriptionProps> = ({
   collection,
 }) => {
   const { description, proposer, calldatas, values, targets } = proposal
-  const { displayName } = useEnsData(proposer)
+  const { name } = useNnsOrEnsData(proposer)
   const chain = useChainStore((x) => x.chain)
 
   const { data: tokenImage, error } = useSWR(
@@ -95,7 +95,7 @@ export const ProposalDescription: React.FC<ProposalDescriptionProps> = ({
               )}
             </Box>
 
-            <Box>{displayName}</Box>
+            <Box>{name}</Box>
           </Flex>
         </Section>
 

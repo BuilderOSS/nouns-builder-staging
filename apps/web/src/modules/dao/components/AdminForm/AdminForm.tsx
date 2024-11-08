@@ -167,7 +167,7 @@ export const AdminForm: React.FC<AdminFormProps> = ({ collectionAddress }) => {
           target: auctionAddress,
           calldata: encodeFunctionData({
             abi: auctionAbi,
-            functionName: 'pause',
+            functionName: 'pause'
           }),
           value: '',
         },

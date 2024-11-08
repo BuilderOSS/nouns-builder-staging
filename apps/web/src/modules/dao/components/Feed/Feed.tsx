@@ -18,7 +18,7 @@ type FeedTabProps = {
 }
 
 export type CasterProfile = {
-  displayName?: string
+  name?: string
   pfp?: string
   fName?: string
 }

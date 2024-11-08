@@ -7,7 +7,7 @@ import {
   ProposalVoteFragment,
   ProposalVoteSupport,
 } from 'src/data/subgraph/sdk.generated'
-import { useEnsData } from 'src/hooks'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 import { useLayoutStore } from 'src/stores'
 import { walletSnippet } from 'src/utils/helpers'
 
@@ -33,7 +33,7 @@ export interface VotePlacardProps {
 }
 
 export const VotePlacard: React.FC<VotePlacardProps> = ({ vote, totalVotes }) => {
-  const { ensName, ensAvatar } = useEnsData(vote.voter)
+  const { name, avatar } = useNnsOrEnsData(vote.voter)
   const [open, setOpen] = useState(true)
   const { isMobile } = useLayoutStore()
 
@@ -86,7 +86,7 @@ export const VotePlacard: React.FC<VotePlacardProps> = ({ vote, totalVotes }) =>
         {vote.support}
       </Text>
       <Flex align={'center'} style={{ gridColumn: 'span 4 / span 4' }}>
-        <Avatar address={vote.voter} src={ensAvatar} size={isMobile ? '24' : '32'} />
+        <Avatar address={vote.voter} src={avatar} size={isMobile ? '24' : '32'} />
         <Text variant={isMobile ? 'label-sm' : 'label-md'} ml="x2">
           {ensName || walletSnippet(vote.voter)}
         </Text>

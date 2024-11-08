@@ -5,7 +5,7 @@ import React, { useMemo } from 'react'
 
 import { Avatar } from 'src/components/Avatar'
 import { DaoMember } from 'src/data/subgraph/requests/daoMembersList'
-import { useEnsData } from 'src/hooks'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 
 import { firstRowItem, lastRowItem, rowItem } from './MembersList.css'
 
@@ -18,7 +18,7 @@ export const MemberCard = ({
   totalSupply?: number
   isMobile: boolean
 }) => {
-  const { displayName, ensAvatar } = useEnsData(member.address)
+  const { name, avatar } = useNnsOrEnsData(member.address)
 
   const timeJoined = useMemo(
     () => dayjs(dayjs.unix(member.timeJoined)).format('MMM DD, YYYY'),
@@ -50,9 +50,9 @@ export const MemberCard = ({
           align={'center'}
           mb={{ '@initial': 'x4', '@768': 'x0' }}
         >
-          <Avatar address={member.address} src={ensAvatar} size="32" />
+          <Avatar address={member.address} src={avatar} size="32" />
           <Text mx="x2" variant="paragraph-md">
-            {displayName}
+            {name}
           </Text>
         </Flex>
         {isMobile ? <Flex w="100%">{gridInfo}</Flex> : gridInfo}

@@ -16,7 +16,7 @@ import { PUBLIC_DEFAULT_CHAINS } from 'src/constants/defaultChains'
 import SWR_KEYS from 'src/constants/swrKeys'
 import { MyDaosResponse } from 'src/data/subgraph/requests/daoQuery'
 import { useBridgeModal } from 'src/hooks/useBridgeModal'
-import { useEnsData } from 'src/hooks/useEnsData'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 import { useLayoutStore } from 'src/stores'
 import { useChainStore } from 'src/stores/useChainStore'
 import { CHAIN_ID } from 'src/typings'
@@ -50,7 +50,7 @@ export const NavMenu = () => {
   const { address } = useAccount()
   const { canUserBridge, openBridgeModal } = useBridgeModal()
 
-  const { displayName, ensAvatar } = useEnsData(address as string)
+  const { name, avatar } = useNnsOrEnsData(address as `0x${string}`)
   const { data: balance } = useBalance({
     address: address as `0x${string}`,
     chainId: selectedChain.id,
@@ -72,7 +72,7 @@ export const NavMenu = () => {
 
   const initMaxDaos = 3
   const viewableDaos = myDaos && myDaos.slice(0, viewAll ? myDaos.length : initMaxDaos)
-  const hasMoreDaos = myDaos && myDaos.length > initMaxDaos ? true : false
+  const hasMoreDaos = myDaos && myDaos.length > initMaxDaos
 
   const onChainChange = (chainId: number) => {
     setActiveDropdown(undefined)
@@ -227,7 +227,7 @@ export const NavMenu = () => {
             trigger={
               <Flex cursor={'pointer'}>
                 {activeDropdown === 'userMenu' && <Box className={activeNavAvatar} />}
-                <Avatar address={address} src={ensAvatar} size={'40'} />
+                <Avatar address={address} src={avatar} size={'40'} />
               </Flex>
             }
             close={activeDropdown !== 'userMenu'}
@@ -302,9 +302,9 @@ export const NavMenu = () => {
                 w={'100%'}
               >
                 <Flex direction={'row'} align={'center'} cursor={'pointer'}>
-                  <Avatar address={address} src={ensAvatar} size={'40'} />
+                  <Avatar address={address} src={avatar} size={'40'} />
                   <Flex direction={'column'} ml={'x2'}>
-                    <Text fontWeight={'display'}>{displayName}</Text>
+                    <Text fontWeight={'display'}>{name}</Text>
                     <Text variant={'paragraph-md'} color={'tertiary'}>
                       {userBalance}
                     </Text>

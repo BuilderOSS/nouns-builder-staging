@@ -83,7 +83,7 @@ export const CastCard = ({
         </Box>
         <Flex direction={{ '@initial': 'column', '@768': 'row' }}>
           <Text mr={'x1'} fontWeight={'display'}>
-            {profile?.displayName || '@' + profile?.fName || 'Name Not Found'}
+            {profile?.name || '@' + profile?.fName || 'Name Not Found'}
           </Text>
           <Flex>
             <Text color="text3" mr={'x1'}>

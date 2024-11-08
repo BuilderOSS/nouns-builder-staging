@@ -45,7 +45,7 @@ export const getFarcasterProfile = async (fid: number) => {
 
   // Neverthrow typing didn't allow for optional chaining checks. Need to use isOk() instead.
   return {
-    displayName: nameRes.isOk() ? nameRes.value.data?.userDataBody?.value : undefined,
+    name: nameRes.isOk() ? nameRes.value.data?.userDataBody?.value : undefined,
     pfp: pfpRes.isOk() ? pfpRes.value.data?.userDataBody?.value : undefined,
     fName: fName.isOk() ? fName.value.data?.userDataBody?.value : undefined,
   }

@@ -5,21 +5,21 @@ import { Avatar } from 'src/components/Avatar'
 import { Icon } from 'src/components/Icon'
 import { ETHERSCAN_BASE_URL } from 'src/constants/etherscan'
 import { AuctionBidFragment } from 'src/data/subgraph/sdk.generated'
-import { useEnsData } from 'src/hooks/useEnsData'
+import useNnsOrEnsData from 'src/hooks/useNnsOrEnsData'
 import { useChainStore } from 'src/stores/useChainStore'
 import { formatCryptoVal } from 'src/utils/numbers'
 
 export const BidCard = ({ bid }: { bid: AuctionBidFragment }) => {
-  const { displayName, ensAvatar } = useEnsData(bid?.bidder)
+  const { name, avatar } = useNnsOrEnsData(bid?.bidder)
   const chain = useChainStore((x) => x.chain)
 
   return (
     <Flex direction={'column'} my="x4" align="center" style={{ height: 35 }}>
       <Flex direction="row" width={'100%'} align="center" justify="space-between">
         <Flex direction="row" align="center">
-          <Avatar address={bid.bidder} src={ensAvatar} size="28" />
+          <Avatar address={bid.bidder} src={avatar} size="28" />
           <Text mx="x2" variant="paragraph-md">
-            {displayName}
+            {name}
           </Text>
         </Flex>
         <Flex direction="row" align="center">
