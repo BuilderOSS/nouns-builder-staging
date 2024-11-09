@@ -5,7 +5,7 @@ import { AddressType } from 'src/typings'
 import { toSeconds } from 'src/utils/helpers'
 import { sanitizeStringForJSON } from 'src/utils/sanitize'
 
-import { AdminFormValues } from '../components/AdminForm'
+import { AdminFormValues } from 'components/AdminForm'
 import { DaoContractAddresses } from '../stores'
 
 type FormValuesTransactionMap = {

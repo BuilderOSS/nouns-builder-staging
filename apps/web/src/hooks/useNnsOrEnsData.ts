@@ -37,14 +37,13 @@ const useNnsOrEnsData = (address: AddressType | string) => {
       () => fetchNNSName(address),
       {
         revalidateOnFocus: false,
-        dedupingInterval: 60000, // 1-minute cache to mimic staleTime
+        dedupingInterval: 60000, // 1-minute cache
       }
   );
 
   // NNS takes precedence over ENS
   const selectedName = nnsName ?? ensName;
 
-  // Fetch avatar for the selected name
   const { data: finalAvatar } = useEnsAvatar({
     name: selectedName,
     enabled: Boolean(selectedName),

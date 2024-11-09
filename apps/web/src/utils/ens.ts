@@ -48,11 +48,10 @@ export async function isValidAddress(
 
 export async function getEnsAddress(
   nameOrAddress: string,
-  provider: PublicClient | undefined = defaultProvider
 ) {
   let resolvedName
   try {
-    resolvedName = await provider?.getEnsAddress({ name: nameOrAddress })
+    resolvedName = await defaultProvider?.getEnsAddress({ name: nameOrAddress })
   } catch (e) {
     console.log(e)
   }
@@ -60,9 +59,6 @@ export async function getEnsAddress(
   return resolvedName ?? nameOrAddress
 }
 
-export async function getEnsName(
-  address: Address,
-  provider: PublicClient | undefined = defaultProvider
-) {
-  return await provider?.getEnsName({ address })
+export async function getEnsName(address: Address) {
+  return await defaultProvider?.getEnsName({ address })
 }

@@ -10,7 +10,7 @@ import { useChainStore } from 'src/stores/useChainStore'
 import { AuctionDetail } from './AuctionDetail'
 
 export const WinningBidder = ({ owner }: { owner?: string }) => {
-  const { name, avatar } = useNnsOrEnsData(owner)
+  const { name, avatar } = useNnsOrEnsData(owner as string)
   const chain = useChainStore((x) => x.chain)
 
   return (
