@@ -3,15 +3,12 @@
 ## Getting Started
 👉 [Read the Goldsky docs](https://docs.goldsky.com/subgraphs/deploying-subgraphs)
 
-The Nouns Builder subgraph supports eight networks:
+The Nouns Builder subgraph supports four networks:
 - `ethereum`
 - `ethereum-sepolia`
 - `base`
-- `base-sepolia`
 - `optimism`
-- `optimism-sepolia`
 - `zora`
-- `zora-sepolia`
 
 ### Step 1 - Install Dependencies
 Navigate to the subgraph directory and run:
