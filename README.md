@@ -5,7 +5,8 @@ This is Nouns Builder front-end website and subgraph mono-repo. You can find Nou
 - [Mainnet](//nouns.build)
 - [Sepolia testnet](//testnet.nouns.build)
 
-For an introduction to Nouns Builder and its concept, you can find further [documentation here](https://builder-docs.vercel.app/). You can also find the [Builder Protocol code here.](https://github.com/BuilderOSS/builder-protocol).
+For an introduction to Nouns Builder and its concept, you can find further [documentation here](https://builder-docs.vercel.app/).  
+You can also find the [Builder Protocol code here](https://github.com/BuilderOSS/builder-protocol).  
 
 ### Apps and packages in this repository include:
 
@@ -32,12 +33,10 @@ For an introduction to Nouns Builder and its concept, you can find further [docu
 
 3. Add the required [environment variables](#environment-variables)
 
-4. Install dependencies across all apps and packages
-
+4. Install dependencies across all apps and packages  
 ```
 pnpm i
-```
-
+```  
 5. Once environment variables are defined, you can run the app in dev mode
 
 ```
