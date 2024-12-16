@@ -2,7 +2,7 @@
   "name": "nouns-builder-subgraph",
   "license": "UNLICENSED",
   "scripts": {
-    "clean": "rm -rf ./generated ./build subgraph.yaml",
+    "clean": "rm -rf ./generated ./build subgraph.yaml node_modules",
     "build:subgraph": "graph build",
     "codegen": "graph codegen",
     "prepare:ethereum-sepolia": "mustache config/sepolia.json subgraph.yaml.mustache > subgraph.yaml",

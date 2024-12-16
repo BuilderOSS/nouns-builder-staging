@@ -1,28 +1,27 @@
 {
   "name": "analytics",
-  "description": "Shared analytics for Zora apps",
+  "description": "Shared analytics based on the Zora analytics package",
   "main": "index.ts",
   "private": true,
   "scripts": {
     "lint": "pnpm type-check && TIMING=1 eslint *.ts",
-    "type-check": "tsc --pretty --noEmit"
+    "type-check": "tsc --pretty --noEmit",
+    "clean": "rm -rf node_modules dist"
   },
   "peerDependencies": {
-    "next": "^13",
-    "react": "^18"
+    "next": "14.2.5",
+    "react": "^18",
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
     "@testing-library/react": "^13.4.0",
-    "@types/react": "^18.0.26",
+    "@types/react": "^18",
     "@types/uuid": "^9.0.0",
-    "@vercel/analytics": "^0.1.5",
+    "@vercel/analytics": "^1.4.1",
     "tsconfig": "workspace:*",
     "eslint": "8.13.0",
     "eslint-config-custom": "workspace:*",
-    "next": "^13.1.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "typescript": "^4.5.2"
   }
 }

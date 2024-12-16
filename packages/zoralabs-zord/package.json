@@ -21,7 +21,7 @@
     "dev": "tsup --watch",
     "dev:types": "tsc --emitDeclarationOnly --declaration --declarationMap",
     "lint": "eslint src --fix",
-    "clean": "rm -rf .turbo node_modules dist"
+    "clean": "rm -rf node_modules dist"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",

@@ -7,7 +7,8 @@
   "private": true,
   "scripts": {
     "lint": "TIMING=1 eslint *.ts",
-    "update": "./update_sdnlist.sh"
+    "update": "./update_sdnlist.sh",
+    "clean": "rm -rf node_modules dist"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

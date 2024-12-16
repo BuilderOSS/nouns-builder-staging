@@ -1,6 +1,6 @@
 # Analytics
 
-This package contains shared snippets for adding analytics to your Zora Next.js application.
+This package contains shared snippets for adding analytics to your Next.js application.
 
 ## Installation
 
@@ -19,14 +19,14 @@ const withTM = require('next-transpile-modules')([..., 'analytics'])
 3. Import desired analytics in the root of your application
 
 ```typescript
-import { SegmentAnalytics, GoogleAnalytics, VercelAnalytics } from 'analytics'
+import {SegmentAnalytics, GoogleAnalytics, VercelAnalytics} from 'analytics'
 
-export default MyApp() {
+export default MyApp()
+{
     <Providers>
-        <SegmentAnalytics id="<SEGMENT_ID>" />
-        <GoogleAnalytics id="<GOOGLE_ANALYTICS_ID>" />
-        <VercelAnalytics />
-    </Providers>
+        <SegmentAnalytics id = "<SEGMENT_ID>" / >
+        <GoogleAnalytics id = "<GOOGLE_ANALYTICS_ID>" / >
+        <VercelAnalytics / >
+        </Providers>
 }
-
 ```
